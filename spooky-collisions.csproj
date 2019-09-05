@@ -6,6 +6,10 @@
     <RootNamespace>spooky_collisions</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="SpookilySharp" Version="1.2.0" />
   </ItemGroup>
