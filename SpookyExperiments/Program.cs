@@ -42,7 +42,7 @@ namespace SpookyCollisions
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
             foreach (var tuple in Enumerable.Range(0, (int) NumBuckets).AsParallel()
-                                    .SelectMany(b => FindCollisions((ulong)b)) {
+                                    .SelectMany(b => FindCollisions((ulong)b))) {
                 Console.WriteLine(tuple);
             }
             watch.Stop();
