@@ -15,7 +15,7 @@ namespace SpookyCollisions
 
         private static IEnumerable<(uint,uint)> FindCollisions(ulong bucket)
         {
-            var elements = new List<(HashCode128, uint)>((int)ExpectedBucketSize);
+            var elements = new List<(HashCode128 Hash, uint Input)>((int)ExpectedBucketSize);
             for (ulong v = 0; v <= uint.MaxValue; v++) {
                 uint n = (uint)v;
                 var hashCode = SpookyUIntHash.QuickHash(n);
@@ -25,9 +25,9 @@ namespace SpookyCollisions
             }
 
             var hashes =  new Dictionary<HashCode128, uint>((int)ExpectedBucketSize);
-            foreach (var tpl in elements) {
-                if (!hashes.TryAdd(tpl.Item1, tpl.Item2)) {
-                    yield return (tpl.Item2, hashes[tpl.Item1]);
+            foreach (var (hash, input) in elements) {
+                if (!hashes.TryAdd(hash, input)) {
+                    yield return (input, hashes[hash]);
                 }
             }
         }
