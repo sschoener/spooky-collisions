@@ -28,25 +28,57 @@ namespace SpookyCollisions
         }
 
         public static void Hash(uint n, ref ulong hash1, ref ulong hash2) {
-            ulong a0 = hash1;
-            ulong b0 = hash2;
-            ulong c0 = SpookyConst + n;
-            ulong d0 = SpookyConst + (4ul << 56);
+            ulong a = hash1;
+            ulong b = hash2;
+            ulong c = SpookyConst + n;
+            ulong d = SpookyConst + (4ul << 56);
 
-            var (d1, c1) = Scramble(d0, c0, 15);
-            var (a1, d2) = Scramble(a0, d1, 52);
-            var (b1, a2) = Scramble(b0, a1, 26);
-            var (c2, b2) = Scramble(c1, b1, 51);
-            var (d3, c3) = Scramble(d2, c2, 28);
-            var (a3, d4) = Scramble(a2, d3, 9);
-            var (b3, a4) = Scramble(b2, a3, 47);
-            var (c4, b4) = Scramble(c3, b3, 54);
-            var (d5, c5) = Scramble(d4, c4, 32);
-            var (a5, d6) = Scramble(a4, d5, 25);
-            var (b5, a6) = Scramble(b4, a5, 63);
+            d ^= c;
+            c = c << 15 | c >> -15;
+            d += c;
 
-            hash2 = b5;
-            hash1 = a6;
+            a ^= d;
+            d = d << 52 | d >> -52;
+            a += d;
+
+            b ^= a;
+            a = a << 26 | a >> -26;
+            b += a;
+
+            c ^= b;
+            b = b << 51 | b >> -51;
+            c += b;
+
+            d ^= c;
+            c = c << 28 | c >> -28;
+            d += c;
+
+            a ^= d;
+            d = d << 9 | d >> -9;
+            a += d;
+
+            b ^= a;
+            a = a << 47 | a >> -47;
+            b += a;
+
+            c ^= b;
+            b = b << 54 | b >> -54;
+            c += b;
+
+            d ^= c;
+            c = c << 32 | c >> -32;
+            d += c;
+
+            a ^= d;
+            d = d << 25 | d >> -25;
+            a += d;
+
+            b ^= a;
+            a = a << 63 | a >> -63;
+            b += a;
+
+            hash2 = b;
+            hash1 = a;
         }
 
         /// <summary>
@@ -57,27 +89,58 @@ namespace SpookyCollisions
         /// <param name="n"></param>
         /// <param name="hash1"></param>
         /// <param name="hash2"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static void QuickHash(uint n, ref ulong hash1, ref ulong hash2) {
-            ulong a0 = hash1;
-            ulong b0 = hash2;
-            ulong c0 = SpookyConst + n;
-            ulong d0 = SpookyConst + (4ul << 56);
+            ulong a = hash1;
+            ulong b = hash2;
+            ulong c = SpookyConst + n;
+            ulong d = SpookyConst + (4ul << 56);
 
-            var (d1, c1) = Scramble(d0, c0, 15);
-            var (a1, d2) = Scramble(a0, d1, 52);
-            var (b1, a2) = Scramble(b0, a1, 26);
-            var (c2, b2) = Scramble(c1, b1, 51);
-            var (d3, c3) = Scramble(d2, c2, 28);
-            var (a3, d4) = Scramble(a2, d3, 9);
-            var (b3, a4) = Scramble(b2, a3, 47);
-            var (c4, b4) = Scramble(c3, b3, 54);
-            var (d5, c5) = Scramble(d4, c4, 32);
-            var (a5, d6) = Scramble(a4, d5, 25);
+            d ^= c;
+            c = c << 15 | c >> -15;
+            d += c;
 
-            hash2 = b4;
-            hash1 = a5;
+            a ^= d;
+            d = d << 52 | d >> -52;
+            a += d;
+
+            b ^= a;
+            a = a << 26 | a >> -26;
+            b += a;
+
+            c ^= b;
+            b = b << 51 | b >> -51;
+            c += b;
+
+            d ^= c;
+            c = c << 28 | c >> -28;
+            d += c;
+
+            a ^= d;
+            d = d << 9 | d >> -9;
+            a += d;
+
+            b ^= a;
+            a = a << 47 | a >> -47;
+            b += a;
+
+            c ^= b;
+            b = b << 54 | b >> -54;
+            c += b;
+
+            d ^= c;
+            c = c << 32 | c >> -32;
+            d += c;
+
+            a ^= d;
+            d = d << 25 | d >> -25;
+            a += d;
+
+            hash2 = b;
+            hash1 = a;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static HashCode128 QuickHash(uint n) {
             ulong hash1 = SpookyConst;
             ulong hash2 = SpookyConst;
